@@ -1,0 +1,21 @@
+[package]
+name = "ratio-common"
+version = "0.1.0"
+description = "Nosana Common for decentralized CI/CD and computation."
+edition = "2021"
+license = "MIT"
+keywords = ["solana", "ratio", "cicd", "common", "anchor"]
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "ratio_common"
+
+[features]
+#default = ["mainnet"]
+mainnet = []
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+
+[dependencies]
+anchor-lang = "0.25.0"
+anchor-spl = "0.25.0"
