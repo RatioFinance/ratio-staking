@@ -5,7 +5,7 @@ use anchor_spl::token::TokenAccount;
 pub struct UpdateSettings<'info> {
     /// CHECK: this will be the new authority
     pub new_authority: AccountInfo<'info>,
-    #[account(token::mint = id::NOS_TOKEN)]
+    #[account(token::mint = id::RATIO_TOKEN)]
     pub token_account: Account<'info, TokenAccount>,
     #[account(
         mut,

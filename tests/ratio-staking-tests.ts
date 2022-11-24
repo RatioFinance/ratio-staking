@@ -22,7 +22,7 @@ export default function suite() {
 
   describe('init()', async function () {
     it('can initialize', async function () {
-      await this.stakingProgram.methods.init().accounts(this.accounts).rpc();
+      await this.stakingProgram.methods.init(this.accounts.tokenAccount).accounts(this.accounts).rpc();
     });
   });
 
@@ -35,6 +35,7 @@ export default function suite() {
         .accounts(this.accounts)
         .rpc()
         .catch((e) => (msg = e.error.errorMessage));
+      console.log('error =', msg);
       expect(msg).to.equal(this.constants.errors.StakeDurationTooShort);
     });
 

@@ -9,10 +9,10 @@ pub struct Unstake<'info> {
     )]
     pub stake: Account<'info, StakeAccount>,
     /// CHECK: we only want to verify this account does not exist
-    #[account(
+    /*#[account(
         address = pda::ratio_rewards(authority.key) @ RatioStakingError::InvalidAccount,
         constraint = utils::account_is_closed(&reward) @ RatioStakingError::HasReward,
-    )]
+    )]*/
     pub reward: AccountInfo<'info>,
     pub authority: Signer<'info>,
 }

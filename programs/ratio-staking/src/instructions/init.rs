@@ -17,7 +17,10 @@ pub struct Init<'info> {
 }
 
 impl<'info> Init<'info> {
-    pub fn handler(&mut self) -> Result<()> {
-        self.settings.set(id::AUTHORITY, id::TOKEN_ACCOUNT)
+    pub fn handler(&mut self, treasury_token_account: Pubkey) -> Result<()> {
+        self.settings.set(
+          self.authority.key(),
+          treasury_token_account
+        )
     }
 }

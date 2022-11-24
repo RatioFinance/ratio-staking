@@ -6,10 +6,6 @@ import { Connection, PublicKey, Signer } from '@solana/web3.js';
 import { Context } from 'mocha';
 import { expect } from 'chai';
 import { createInterface } from 'readline';
-import { JobsProgram, PoolsProgram, RewardsProgram, StakingProgram } from './types/nosana';
-import { constants } from './contstants';
-import MintKey = require('./keys/devr1BGQndEW5k5zfvG5FsLyZv1Ap73vNgAHcQ9sUVP.json');
-import DummyKey = require('./keys/dumQVNHZ1KNcLmzjMaDPEA5vFCzwHEEcQmZ8JHmmCNH.json');
 import _ = require('lodash');
 
 /**
@@ -23,30 +19,6 @@ async function setupProgram(address: PublicKey) {
 
 /**
  *
- * @param NosanaProgram
- */
-async function setupAnchorAndPrograms() {
-  // anchor
-  const provider = AnchorProvider.env();
-  setProvider(provider);
-  const wallet = provider.wallet as Wallet;
-
-  const programs = {
-    staking: (await setupProgram(constants.stakingProgramAddress)) as unknown as StakingProgram,
-    rewards: (await setupProgram(constants.rewardsProgramAddress)) as unknown as RewardsProgram,
-    pools: (await setupProgram(constants.poolsProgramAddress)) as unknown as PoolsProgram,
-    jobs: (await setupProgram(constants.jobsProgramAddress)) as unknown as JobsProgram,
-  };
-
-  return {
-    provider,
-    wallet,
-    programs,
-  };
-}
-
-/**
- *
  * @param provider
  * @param wallet
  */
@@ -54,29 +26,6 @@ async function getTokenBalance(provider: AnchorProvider, wallet: PublicKey) {
   return parseInt((await provider.connection.getTokenAccountBalance(wallet)).value.amount);
 }
 
-/**
- *
- */
-function getDummyKey() {
-  return anchor.web3.Keypair.fromSecretKey(new Uint8Array(DummyKey));
-}
-
-/**
- *
- * @param connection
- * @param payer
- * @param authority
- */
-async function createNosMint(connection: Connection, payer: Signer, authority: PublicKey) {
-  return await createMint(
-    connection,
-    payer,
-    authority,
-    null,
-    6,
-    anchor.web3.Keypair.fromSecretKey(new Uint8Array(MintKey))
-  );
-}
 
 /**
  *
@@ -275,14 +224,11 @@ export {
   ask,
   buf2hex,
   calculateXnos,
-  getDummyKey,
   getTimestamp,
   getTokenBalance,
   getUsers,
-  createNosMint,
   now,
   pda,
-  setupAnchorAndPrograms,
   setupSolanaUser,
   setupProgram,
   sleep,

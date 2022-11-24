@@ -10,15 +10,15 @@ use instructions::*;
 use ratio_common::*;
 pub use state::*; // expose stake for cpi
 
-declare_id!(id::STAKING_PROGRAM);
+declare_id!("C4mK9qXnhnKJ74su2Zx7uWV43LqnU6N6my6dFbs7wVnj");
 
 #[program]
 pub mod ratio_staking {
     use super::*;
 
     /// Initialize the [SettingsAccount](#settings-account).
-    pub fn init(ctx: Context<Init>) -> Result<()> {
-        ctx.accounts.handler()
+    pub fn init(ctx: Context<Init>, treasury_token_account: Pubkey) -> Result<()> {
+        ctx.accounts.handler(treasury_token_account)
     }
 
     /// Create a [StakeAccount](#stake-account) and [VaultAccount](#vault-account).
