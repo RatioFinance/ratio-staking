@@ -6,6 +6,9 @@
 // https://solscan.io/token/ratioMVg27rSZbSvBopUvsdrGUzeALUfFma61mpxc8J
 pub const RATIO_DECIMALS: u64 = 1_000_000;
 
+// total supply the Ratio native token
+pub const RATIO_TOTAL_SUPPLY: u128 = 100_000_000 * RATIO_DECIMALS as u128;
+
 // prefix used for PDAs to avoid certain collision attacks
 // https://en.wikipedia.org/wiki/Collision_attack#Chosen-prefix_collision_attack
 pub const PREFIX_REWARDS: &str = "reward";

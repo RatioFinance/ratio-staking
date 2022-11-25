@@ -5,12 +5,12 @@ use anchor_spl::token::{Token, TokenAccount};
 pub struct Slash<'info> {
     #[account(mut)]
     pub vault: Account<'info, TokenAccount>,
-    #[account(mut, has_one = vault @ RatioStakingError::InvalidVault)]
+    #[account(mut, has_one = vault @ CommonError::InvalidVault)]
     pub stake: Account<'info, StakeAccount>,
-    #[account(mut, address = settings.token_account @ RatioStakingError::InvalidTokenAccount)]
+    #[account(mut, address = settings.token_account @ CommonError::InvalidTokenAccount)]
     pub token_account: Account<'info, TokenAccount>,
     #[account(
-        has_one = authority @ RatioStakingError::Unauthorized,
+        has_one = authority @ CommonError::Unauthorized,
         seeds = [ constants::PREFIX_SETTINGS.as_ref() ],
         bump,
     )]

@@ -9,8 +9,8 @@ pub struct Topup<'info> {
     pub vault: Account<'info, TokenAccount>,
     #[account(
         mut,
-        has_one = vault @ RatioStakingError::InvalidVault,
-        has_one = authority @ RatioStakingError::Unauthorized,
+        has_one = vault @ CommonError::InvalidVault,
+        has_one = authority @ CommonError::Unauthorized,
         constraint = stake.time_unstake == 0 @ RatioStakingError::AlreadyUnstaked,
     )]
     pub stake: Account<'info, StakeAccount>,

@@ -1,6 +1,7 @@
 [workspace]
 members = [
-    "programs/*"
+    "programs/ratio-staking",
+    "programs/ratio-rewards"
 ]
 
 [profile.release]

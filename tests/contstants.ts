@@ -6,6 +6,7 @@ const secondsPerDay = 24 * 60 * 60;
 const initialRate = new BN('3402823669209384634633746');
 
 const constants = {
+  ratio_test_mint: new PublicKey("CaCXV7hMKsVKgiAd83Go8sCXDHzQ45ftfuiMGAg4TkGy"),
   allowedClockDelta: 3000,
   emission: 20,
   secondsPerDay,

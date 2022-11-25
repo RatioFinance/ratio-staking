@@ -1,6 +1,6 @@
 import * as anchor from '@project-serum/anchor';
 import { expect } from 'chai';
-import { calculateXnos, getTokenBalance, sleep } from './utils';
+import { calculateXnos, getTokenBalance, sleep } from '../utils';
 import { beforeEach } from 'mocha';
 
 export default function suite() {

@@ -4,7 +4,7 @@ use crate::*;
 pub struct Extend<'info> {
     #[account(
         mut,
-        has_one = authority @ RatioStakingError::Unauthorized,
+        has_one = authority @ CommonError::Unauthorized,
         constraint = stake.time_unstake == 0 @ RatioStakingError::AlreadyUnstaked,
     )]
     pub stake: Account<'info, StakeAccount>,

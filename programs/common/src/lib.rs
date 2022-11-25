@@ -6,5 +6,6 @@ pub mod pda;
 pub mod utils;
 pub mod writer;
 
-// expose RatioStakingError without the "errors::" prefix
+// expose CommonError without the "errors::" prefix
 mod errors;
+pub use errors::CommonError;

@@ -1,0 +1,21 @@
+[package]
+name = "ratio-rewards"
+version = "0.1.0"
+description = "Reflection rewards for Ratio"
+edition = "2021"
+license = "MIT"
+keywords = ["solana", "ratio", "cicd", "rewards", "anchor"]
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "ratio_rewards"
+
+[features]
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+
+[dependencies]
+anchor-lang = "0.25.0"
+anchor-spl = "0.25.0"
+ratio-staking = { path = "../ratio-staking", features = ["cpi"] }
+ratio-common = { path = "../common" }

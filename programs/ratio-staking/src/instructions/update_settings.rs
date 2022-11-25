@@ -9,7 +9,7 @@ pub struct UpdateSettings<'info> {
     pub token_account: Account<'info, TokenAccount>,
     #[account(
         mut,
-        has_one = authority @ RatioStakingError::Unauthorized,
+        has_one = authority @ CommonError::Unauthorized,
         seeds = [ constants::PREFIX_SETTINGS.as_ref() ],
         bump
     )]

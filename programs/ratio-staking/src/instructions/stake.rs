@@ -3,7 +3,7 @@ use anchor_spl::token::{Mint, Token, TokenAccount};
 
 #[derive(Accounts)]
 pub struct Stake<'info> {
-    #[account(address = id::RATIO_TOKEN @ RatioStakingError::InvalidMint)]
+    #[account(address = id::RATIO_TOKEN @ CommonError::InvalidMint)]
     pub mint: Account<'info, Mint>,
     #[account(mut)]
     pub user: Account<'info, TokenAccount>,

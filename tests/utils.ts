@@ -8,6 +8,7 @@ import { expect } from 'chai';
 import { createInterface } from 'readline';
 import _ = require('lodash');
 
+import MintKey = require('./keys/CaCXV7hMKsVKgiAd83Go8sCXDHzQ45ftfuiMGAg4TkGy.json');
 /**
  *
  * @param address
@@ -26,6 +27,22 @@ async function getTokenBalance(provider: AnchorProvider, wallet: PublicKey) {
   return parseInt((await provider.connection.getTokenAccountBalance(wallet)).value.amount);
 }
 
+/**
+ *
+ * @param connection
+ * @param payer
+ * @param authority
+ */
+async function createRatioMint(connection: Connection, payer: Signer, authority: PublicKey) {
+  return await createMint(
+    connection,
+    payer,
+    authority,
+    null,
+    6,
+    anchor.web3.Keypair.fromSecretKey(new Uint8Array(MintKey))
+  );
+}
 
 /**
  *
@@ -158,7 +175,7 @@ async function updateRewards(
   return amount;
 }
 
-async function mintNosTo(mochaContext: Context, to: PublicKey, amount: number | bigint) {
+async function mintRatioTo(mochaContext: Context, to: PublicKey, amount: number | bigint) {
   await mintTo(mochaContext.connection, mochaContext.payer, mochaContext.mint, to, mochaContext.payer, amount);
 }
 
@@ -184,7 +201,7 @@ async function setupSolanaUser(mochaContext: Context) {
     publicKey
   );
   // fund user
-  await mintNosTo(mochaContext, ata, mochaContext.constants.userSupply);
+  await mintRatioTo(mochaContext, ata, mochaContext.constants.userSupply);
 
   // return user object
   return {
@@ -195,7 +212,6 @@ async function setupSolanaUser(mochaContext: Context) {
     wallet,
     balance: mochaContext.constants.userSupply,
     // pdas
-    project: await pda([utf8.encode('project'), publicKey.toBuffer()], mochaContext.jobsProgram.programId),
     stake: await pda(
       [utf8.encode('stake'), mochaContext.mint.toBuffer(), publicKey.toBuffer()],
       mochaContext.stakingProgram.programId
@@ -205,10 +221,6 @@ async function setupSolanaUser(mochaContext: Context) {
       [utf8.encode('vault'), mochaContext.mint.toBuffer(), publicKey.toBuffer()],
       mochaContext.stakingProgram.programId
     ),
-    // undefined
-    job: undefined,
-    ataNft: undefined,
-    metadataAddress: undefined,
   };
 }
 
@@ -235,5 +247,6 @@ export {
   solanaExplorer,
   updateRewards,
   mapUsers,
-  mintNosTo,
+  mintRatioTo,
+  createRatioMint
 };

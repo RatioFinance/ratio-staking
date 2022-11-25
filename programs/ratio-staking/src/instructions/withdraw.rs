@@ -5,12 +5,12 @@ use anchor_spl::token::{Token, TokenAccount};
 pub struct Withdraw<'info> {
     #[account(mut)]
     pub user: Account<'info, TokenAccount>,
-    #[account(mut, constraint = vault.amount != 0 @ RatioStakingError::VaultEmpty)]
+    #[account(mut, constraint = vault.amount != 0 @ CommonError::VaultEmpty)]
     pub vault: Account<'info, TokenAccount>,
     #[account(
         mut,
-        has_one = vault @ RatioStakingError::InvalidVault,
-        has_one = authority @ RatioStakingError::Unauthorized,
+        has_one = vault @ CommonError::InvalidVault,
+        has_one = authority @ CommonError::Unauthorized,
         constraint = stake.time_unstake != 0 @ RatioStakingError::NotUnstaked,
     )]
     pub stake: Account<'info, StakeAccount>,
