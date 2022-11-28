@@ -21,8 +21,6 @@ describe("ratio-staking", async function () {
 
   const program = anchor.workspace.RatioStaking as Program<RatioStaking>;
   const rewardsProgram = anchor.workspace.RatioRewards as Program<RatioRewards>;
-  
-  console.log("rewardsProgram =", rewardsProgram);
 
   before("Is initialized!", async function() {
     // Add your test here.

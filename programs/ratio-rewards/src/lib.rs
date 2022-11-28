@@ -1,6 +1,5 @@
 mod instructions;
 mod macros;
-mod security;
 mod state;
 
 use anchor_lang::declare_id;

@@ -1,4 +1,4 @@
-//! Instructions for Nosana Staking.
+//! Instructions for Ratio Staking.
 
 pub mod close;
 pub mod extend;

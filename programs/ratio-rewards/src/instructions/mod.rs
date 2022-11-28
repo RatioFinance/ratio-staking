@@ -1,4 +1,4 @@
-//! Instructions for Nosana Rewards.
+//! Instructions for Ratio Rewards.
 
 pub mod add_fee;
 pub mod claim;

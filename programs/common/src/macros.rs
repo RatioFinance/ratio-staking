@@ -60,7 +60,7 @@ macro_rules! close_vault {
 #[macro_export]
 macro_rules! transfer_fee {
     ($accounts: expr, $from: ident, $authority: ident, $seeds: expr, $amount: expr) => {
-        nosana_rewards::cpi::add_fee(
+        ratio_rewards::cpi::add_fee(
             CpiContext::new_with_signer(
                 $accounts.rewards_program.to_account_info(),
                 AddFee {

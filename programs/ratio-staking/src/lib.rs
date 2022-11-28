@@ -1,7 +1,6 @@
 mod errors;
 mod instructions;
 mod macros;
-mod security;
 mod state;
 
 use anchor_lang::prelude::*;
@@ -59,7 +58,7 @@ pub mod ratio_staking {
     }
 
     /// Reduce a [StakeAccount](#stake-account)'s [NOS](/tokens/token) tokens.
-    /// Slashing is a feature used by the Nosana Protocol to punish bad actors.
+    /// Slashing is a feature used by the Ratio Protocol to punish bad actors.
     pub fn slash(ctx: Context<Slash>, amount: u64) -> Result<()> {
         ctx.accounts.handler(amount)
     }
