@@ -9,10 +9,10 @@ use instructions::*;
 use ratio_common::*;
 pub use state::*; // expose state for cpi
 
-declare_id!("6hkZa6auzQEbh9cFmR4CdEApBb9phiHZLzFwJU8A5xDA");
+declare_id!(id::REWARDS_PROGRAM);
 
 #[program]
-pub mod nosana_rewards {
+pub mod ratio_rewards {
     use super::*;
 
     /// Initialize the [ReflectionAccount](#reflection-account) and [VaultAccount](#vault-account).

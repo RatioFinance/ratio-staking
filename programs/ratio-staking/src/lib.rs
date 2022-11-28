@@ -10,7 +10,7 @@ use instructions::*;
 use ratio_common::*;
 pub use state::*; // expose stake for cpi
 
-declare_id!("C4mK9qXnhnKJ74su2Zx7uWV43LqnU6N6my6dFbs7wVnj");
+declare_id!(id::STAKING_PROGRAM);
 
 #[program]
 pub mod ratio_staking {

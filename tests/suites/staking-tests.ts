@@ -198,7 +198,7 @@ export default function suite() {
         .accounts({ ...this.accounts, authority: this.users.user3.publicKey })
         .signers([this.users.user3.user])
         .rpc()
-        .catch((e) => (msg = e.error.errorMessage));
+        .catch((e) => (msg = e.error?.errorMessage));
       expect(msg).to.equal(this.constants.errors.Unauthorized);
     });
 

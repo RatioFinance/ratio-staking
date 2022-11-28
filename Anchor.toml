@@ -4,6 +4,7 @@ skip-lint = false
 
 [programs.localnet]
 ratio_staking = "C4mK9qXnhnKJ74su2Zx7uWV43LqnU6N6my6dFbs7wVnj"
+ratio_rewards = "6hkZa6auzQEbh9cFmR4CdEApBb9phiHZLzFwJU8A5xDA"
 
 [registry]
 url = "https://api.apr.dev"

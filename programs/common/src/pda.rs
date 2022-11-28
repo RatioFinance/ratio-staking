@@ -8,3 +8,10 @@ use anchor_lang::prelude::*;
 fn get_address(seeds: &[&[u8]], program_id: &Pubkey) -> Pubkey {
     Pubkey::find_program_address(seeds, program_id).0
 }
+
+pub fn ratio_rewards(authority: &Pubkey) -> Pubkey {
+  get_address(
+      &[constants::PREFIX_REWARDS.as_ref(), authority.as_ref()],
+      &id::REWARDS_PROGRAM,
+  )
+}
