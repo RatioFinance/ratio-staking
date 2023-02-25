@@ -3,15 +3,15 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-ratio_staking = "C4mK9qXnhnKJ74su2Zx7uWV43LqnU6N6my6dFbs7wVnj"
-ratio_rewards = "6hkZa6auzQEbh9cFmR4CdEApBb9phiHZLzFwJU8A5xDA"
+ratio_staking = "A6kjpho36x7YvaodxXD7J6vZKBmrnzfpVUHFzN1qwUxr"
+ratio_rewards = "GAR1XhoN4SibcvnZNZt5fmaVk2smpqgnQ7HjxfoeX4MR"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "localnet"
-wallet = "/root/.config/solana/id.json"
+wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
