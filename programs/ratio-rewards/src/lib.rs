@@ -15,8 +15,13 @@ pub mod ratio_rewards {
     use super::*;
 
     /// Initialize the [ReflectionAccount](#reflection-account) and [VaultAccount](#vault-account).
-    pub fn init(ctx: Context<Init>) -> Result<()> {
-        ctx.accounts.handler(*ctx.bumps.get("vault").unwrap())
+    pub fn init(ctx: Context<Init>, funding_rate: f64) -> Result<()> {
+        ctx.accounts.handler(*ctx.bumps.get("vault").unwrap(), funding_rate, *ctx.bumps.get("funding").unwrap())
+    }
+
+    /// Update funding rate. Can be only called by the authority stored in the reflection account.
+    pub fn update_funding_rate(ctx: Context<UpdateFundingRate>, funding_rate: f64) -> Result<()> {
+        ctx.accounts.handler(funding_rate)
     }
 
     /// Initialize a [RewardsAccount](#rewards-account).
@@ -27,6 +32,11 @@ pub mod ratio_rewards {
     /// Send [NOS](/tokens/token) to the [VaultAccount](#vault-account).
     pub fn add_fee(ctx: Context<AddFee>, amount: u64) -> Result<()> {
         ctx.accounts.handler(amount)
+    }
+
+    /// Send estimated funding amount for the time elapsed from last funding time. [funding] -> [vault_account]. Can be called by anyone
+    pub fn add_funding(ctx: Context<AddFunding>) -> Result<()> {
+        ctx.accounts.handler()
     }
 
     /// Claim rewards from a [RewardsAccount](#rewards-account) and [VaultAccount](#vault-account).

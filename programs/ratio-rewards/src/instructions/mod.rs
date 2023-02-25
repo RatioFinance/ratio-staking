@@ -6,6 +6,8 @@ pub mod close;
 pub mod enter;
 pub mod init;
 pub mod sync;
+pub mod add_funding;
+pub mod update_funding_rate;
 
 pub use add_fee::*;
 pub use claim::*;
@@ -13,3 +15,5 @@ pub use close::*;
 pub use enter::*;
 pub use init::*;
 pub use sync::*;
+pub use add_funding::*;
+pub use update_funding_rate::*;

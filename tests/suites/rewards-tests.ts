@@ -1,7 +1,7 @@
 import * as anchor from '@project-serum/anchor';
 import { expect } from 'chai';
 import { BN } from '@project-serum/anchor';
-import { getTokenBalance, updateRewards } from '../utils';
+import { getTokenBalance, mintRatioTo, sleep, updateRewards } from '../utils';
 
 export default function suite() {
   afterEach(async function () {
@@ -12,14 +12,34 @@ export default function suite() {
   describe('init()', async function () {
     it('can initialize the rewards vault', async function () {
       this.accounts.vault = this.vaults.rewards;
-      await this.rewardsProgram.methods.init().accounts(this.accounts).rpc();
+      const funding_rate = 0;
+      await this.rewardsProgram.methods.init(funding_rate,).accounts(this.accounts).rpc();
 
       // test stats
       const stats = await this.rewardsProgram.account.reflectionAccount.fetch(this.accounts.reflection);
       expect(stats.totalXnos.toString()).to.equal(this.total.xnos.toString());
       expect(stats.totalReflection.toString()).to.equal(this.total.reflection.toString());
       expect(stats.rate.toString()).to.equal(this.constants.initialRate.toString());
+      expect(stats.fundingRate).to.equal(0);
     });
+
+    it('fund funding account', async function () {
+      await mintRatioTo(this, this.accounts.funding, this.constants.initialFundingAmount);
+      expect(await getTokenBalance(this.provider, this.accounts.funding)).to.equal(this.constants.initialFundingAmount);
+    });
+
+    it('can update funding rate', async function () {
+      const funding_rate = this.constants.initialFundingRate;
+      await this.rewardsProgram.methods.updateFundingRate(funding_rate).accounts(this.accounts).rpc();
+      const stats = await this.rewardsProgram.account.reflectionAccount.fetch(this.accounts.reflection);
+      expect(stats.fundingRate).to.equal(this.constants.initialFundingRate);
+    })
+
+    it('cannot update funding rate with invalid authority', async function () {
+      let msg = '';
+      await this.rewardsProgram.methods.updateFundingRate(0).accounts({ ...this.accounts, authority: this.users.node2.publicKey }).signers([this.users.node2.wallet.payer]).rpc().catch((e) => (msg = e.error.errorMessage));
+      expect(msg).to.equal(this.constants.errors.Unauthorized);
+    })
   });
 
   describe('enter()', async function () {
@@ -61,6 +81,27 @@ export default function suite() {
   });
 
   describe('add_fee()', async function () {
+
+    it('add funding to the rewards pool', async function () {
+      const seconds = 10; // increase this number get a higher test reliability
+      const beforeFundingVaultBalance = await getTokenBalance(this.provider, this.vaults.rewards);
+      const beforeStats = await this.rewardsProgram.account.reflectionAccount.fetch(this.accounts.reflection);
+      const lastFundingTime = beforeStats.lastFundingTime;
+      
+      await sleep(seconds);
+      const currentTIme = Math.floor(Date.now() / 1000);
+      await this.rewardsProgram.methods.addFunding().accounts(this.accounts).rpc();
+      
+      const timeElapsedSinceLastFunding = currentTIme - lastFundingTime.toNumber();
+      const estimatedFundingAmount = Math.floor(timeElapsedSinceLastFunding * this.constants.initialFundingRate * this.constants.decimals);
+      const afterFundingVaultBalance = await getTokenBalance(this.provider, this.vaults.rewards);
+      const differenceInVaultBalance = afterFundingVaultBalance - beforeFundingVaultBalance;
+
+      this.balances.vaultRewards += estimatedFundingAmount;
+      console.log(differenceInVaultBalance);
+      expect(differenceInVaultBalance).to.equal(estimatedFundingAmount)
+    });
+
     it('can add fees to the pool', async function () {
       const fee = new BN(this.constants.feeAmount);
       await this.rewardsProgram.methods.addFee(fee).accounts(this.accounts).rpc();

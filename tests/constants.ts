@@ -25,6 +25,8 @@ const constants = {
   jobTimeout: 5,
   jobExpiration: 5,
   initialRate,
+  initialFundingRate: 0.000000031709792,
+  initialFundingAmount: 100000000,
 
   stakingProgramAddress_: new PublicKey('nosScmHY2uR24Zh751PmGj9ww9QRNHewh9H59AfrTJE'),
 
