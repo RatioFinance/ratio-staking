@@ -40,6 +40,20 @@ export default function suite() {
       await this.rewardsProgram.methods.updateFundingRate(0).accounts({ ...this.accounts, authority: this.users.node2.publicKey }).signers([this.users.node2.wallet.payer]).rpc().catch((e) => (msg = e.error.errorMessage));
       expect(msg).to.equal(this.constants.errors.Unauthorized);
     })
+
+    it('reset funding time', async function () {
+      await sleep(3); // Wait for 3 seconds, so as to make the test more reliable
+      await this.rewardsProgram.methods.resetFundingTime().accounts(this.accounts).rpc();
+      const stats = await this.rewardsProgram.account.reflectionAccount.fetch(this.accounts.reflection);
+      const currentTIme = Math.floor(Date.now() / 1000);
+      expect(stats.lastFundingTime.toNumber()).to.be.closeTo(currentTIme, 2, 'Funding not reset Error');
+    })
+
+    it('cannot reset funding time with invalid authority', async function () {
+      let msg = '';
+      await this.rewardsProgram.methods.resetFundingTime().accounts({ ...this.accounts, authority: this.users.node2.publicKey }).signers([this.users.node2.wallet.payer]).rpc().catch((e) => (msg = e.error.errorMessage));
+      expect(msg).to.equal(this.constants.errors.Unauthorized);
+    })
   });
 
   describe('enter()', async function () {
@@ -98,7 +112,6 @@ export default function suite() {
       const differenceInVaultBalance = afterFundingVaultBalance - beforeFundingVaultBalance;
 
       this.balances.vaultRewards += estimatedFundingAmount;
-      console.log(differenceInVaultBalance);
       expect(differenceInVaultBalance).to.equal(estimatedFundingAmount)
     });
 

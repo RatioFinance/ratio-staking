@@ -24,6 +24,11 @@ pub mod ratio_rewards {
         ctx.accounts.handler(funding_rate)
     }
 
+    /// Reset funding time. Can be only called by the authority stored in the reflection account.
+    pub fn reset_funding_time(ctx: Context<ResetFundingTime>) -> Result<()> {
+        ctx.accounts.handler()
+    }
+
     /// Initialize a [RewardsAccount](#rewards-account).
     pub fn enter(ctx: Context<Enter>) -> Result<()> {
         ctx.accounts.handler(*ctx.bumps.get("reward").unwrap())
