@@ -8,11 +8,15 @@ use ratio_common::constants::RATIO_TOTAL_SUPPLY;
 /// The `ReflectionAccount` struct holds all the information on the reflection pool.
 #[account]
 pub struct ReflectionAccount {
+    pub authority: Pubkey,
     pub rate: u128,
     pub total_reflection: u128,
     pub total_xnos: u128,
     pub vault: Pubkey,
     pub vault_bump: u8,
+    pub last_funding_time: i64,
+    pub funding_rate: f64,
+    pub funding_bump: u8
 }
 
 impl ReflectionAccount {
@@ -32,12 +36,16 @@ impl ReflectionAccount {
     pub const INITIAL_RATE: u128 = (u128::MAX - (u128::MAX % RATIO_TOTAL_SUPPLY)) / RATIO_TOTAL_SUPPLY;
     // pub const INITIAL_RATE: u128 = u128::pow(10, 15);
 
-    pub fn init(&mut self, vault: Pubkey, vault_bump: u8) -> Result<()> {
+    pub fn init(&mut self, vault: Pubkey, vault_bump: u8, funding_rate: f64, funding_bump: u8, authority: Pubkey) -> Result<()> {
+        self.authority = authority;
         self.rate = ReflectionAccount::INITIAL_RATE;
         self.total_reflection = 0;
         self.total_xnos = 0;
         self.vault = vault;
         self.vault_bump = vault_bump;
+        self.last_funding_time = Clock::get()?.unix_timestamp;
+        self.funding_rate = funding_rate;
+        self.funding_bump = funding_bump;
         Ok(())
     }
 

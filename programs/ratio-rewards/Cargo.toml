@@ -13,6 +13,7 @@ name = "ratio_rewards"
 [features]
 no-entrypoint = []
 cpi = ["no-entrypoint"]
+mainnet = []
 
 [dependencies]
 anchor-lang = "0.25.0"

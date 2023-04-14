@@ -81,6 +81,10 @@ describe("ratio-staking", async function () {
       [utf8.encode('stake'), this.mint.toBuffer(), this.publicKey.toBuffer()],
       this.stakingProgram.programId
     );
+    this.accounts.funding = await pda(
+      [utf8.encode('funding')],
+      this.rewardsProgram.programId
+    )
   });
 
   describe('initialize environment', initializationSuite);
