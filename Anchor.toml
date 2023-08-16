@@ -3,8 +3,8 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-ratio_staking = "A6kjpho36x7YvaodxXD7J6vZKBmrnzfpVUHFzN1qwUxr"
-ratio_rewards = "GAR1XhoN4SibcvnZNZt5fmaVk2smpqgnQ7HjxfoeX4MR"
+ratio_staking = "2YRmpDfPE619v42fgKwA7hSrcoUavNwcMfbcCToVj2qL"
+ratio_rewards = "EkDHzRjupQbP2YayEN5j99D1482JbPxWLTz8MxzF7meN"
 
 [registry]
 url = "https://api.apr.dev"

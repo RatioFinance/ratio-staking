@@ -23,11 +23,11 @@ mod ratio_token {
 pub use rewards_program::ID as REWARDS_PROGRAM;
 mod rewards_program {
     use super::*;
-    declare_id!("GAR1XhoN4SibcvnZNZt5fmaVk2smpqgnQ7HjxfoeX4MR");
+    declare_id!("EkDHzRjupQbP2YayEN5j99D1482JbPxWLTz8MxzF7meN");
 }
 
 pub use staking_program::ID as STAKING_PROGRAM;
 mod staking_program {
     use super::*;
-    declare_id!("A6kjpho36x7YvaodxXD7J6vZKBmrnzfpVUHFzN1qwUxr");
+    declare_id!("2YRmpDfPE619v42fgKwA7hSrcoUavNwcMfbcCToVj2qL");
 }
